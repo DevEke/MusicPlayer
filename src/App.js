@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactPlayer from 'react-player';
 import './App.scss';
 import { songs } from './songs';
-import { IoPlay, IoMusicalNotes, IoPause, IoChevronUp, IoChevronDown, IoRepeat, IoPlayForward, IoPlayBack, IoShuffle, IoVolumeHigh, IoVolumeMute } from 'react-icons/io5'
+import { IoPlay, IoMusicalNotes, IoPause, IoChevronUp, IoChevronDown, IoRepeat, IoPlayForward, IoPlayBack, IoVolumeHigh, IoVolumeMute } from 'react-icons/io5'
 
 export default class App extends Component {
   constructor() {
