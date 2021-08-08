@@ -39,7 +39,6 @@ export default function App() {
 
   const nextSong = (song) => {
     let index = playlist.indexOf(song);
-    console.log('next clicked');
     if (index < playlist.length - 1) {
       setNowPlaying(playlist[index + 1]);
     }
@@ -50,12 +49,10 @@ export default function App() {
   }
 
   const handleDuration = (duration) => {
-    console.log('onDuration', duration);
     setDuration(duration);
   }
 
   const handleProgress = state => {
-    console.log(state);
     setLoaded(`${state.loaded * 100}%`);
     setPlayed(`${state.played * 100}%`);
     setPlayedSecs(state.playedSeconds);
@@ -70,8 +67,6 @@ export default function App() {
 
   const prevSong = (song) => {
     let index = playlist.indexOf(song);
-    console.log('index: ' + index)
-    console.log('playlist length: ' + (playlist.length - 1));
     if (index > 0) {
       setNowPlaying(playlist[index - 1]);
     }
@@ -98,10 +93,6 @@ export default function App() {
         <div className="song-list">
           <div className="playlist-head">
             <IoMusicalNotes className="icon"/>
-            {/* <div className="custom-icon">
-              <IoAddCircle className="icon"/>
-              <p>Add Music</p>
-            </div> */}
           </div>
           <div className="songs-list-songs">
           {playlist?.map((song, index)=> {
@@ -131,7 +122,6 @@ export default function App() {
                     className={`tab-btn ${musicModal ? 'screen-on' : 'screen-off'}`}
                     onClick={() => setMusicModal(false)}
                     >
-                    {/* <p>Collapse</p> */}
                     <IoClose className="icon"/>
                   </button> :
                  null }
