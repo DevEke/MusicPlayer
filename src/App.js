@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
 import './App.scss';
 import { songs } from './songs';
+import { useSpring, animated} from 'react-spring';
+import { useDrag } from 'react-use-gesture';
 import { IoPlay, IoMusicalNotes, IoPauseOutline, IoClose, IoPlaySkipForwardOutline, IoPlaySkipBackOutline } from 'react-icons/io5';
+import moment from 'moment';
 
 
 
@@ -11,9 +14,23 @@ export default function App() {
   const [nowPlaying, setNowPlaying] = useState(undefined);
   const [musicModal, setMusicModal] = useState(false);
   const [playing, setPlaying] =useState(false);
+  const [played, setPlayed] = useState(0);
+  const [playedSecs, setPlayedSecs] = useState(0);
+  const [loaded, setLoaded] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [seeking, setSeeking] = useState(false);
 
   const playSong = () => {
     setPlaying(true)
+  }
+
+  const returnTime = (time) => {
+    let totalTime = Math.round(time);
+    let min = Math.floor((totalTime%3600)/60);
+    let sec = totalTime - ( min * 60)
+    if (min < 10) { min = "0"+ min}
+    if (sec < 10) { min = "0" + sec}
+    return min + ":" + sec;
   }
 
   const nextSong = (song) => {
@@ -24,6 +41,38 @@ export default function App() {
     }
   }
 
+  const fastForward = e => {
+    setSeeking(true);
+  }
+
+  const rewind = e => {
+    setSeeking(false);
+    this.player.seekTo(parseFloat(e.target.value));
+  }
+
+  const handleSeek = e => {
+    setPlayed(parseFloat(e.target.value));
+  }
+
+  const handleDuration = (duration) => {
+    console.log('onDuration', duration);
+    setDuration(duration);
+  }
+
+  const handleProgress = state => {
+    console.log(state);
+    setLoaded(`${state.loaded * 100}%`);
+    setPlayed(`${state.played * 100}%`);
+    setPlayedSecs(state.playedSeconds);
+    if(!seeking) {
+      return state
+    }
+  }
+
+  const ref = player => {
+    return player
+  }
+
   const prevSong = (song) => {
     let index = playlist.indexOf(song);
     console.log('index: ' + index)
@@ -32,6 +81,7 @@ export default function App() {
       setNowPlaying(playlist[index - 1]);
     }
   }
+
 
 
   const setCurrentSong = (song) => {
@@ -93,6 +143,11 @@ export default function App() {
 
 
                   <ReactPlayer
+                    ref={ref}
+                    onSeek={e=>console.log(e.target.value)}
+                    onDuration={handleDuration}
+                    onProgress={handleProgress}
+                    onEnded={() => nextSong(nowPlaying)}
                     style={{position: 'absolute'}}
                     url={nowPlaying?.file}
                     playing={playing}
@@ -112,7 +167,6 @@ export default function App() {
                 <p>{nowPlaying?.artist} ft. {nowPlaying?.features.map(x=>`${x} `)}</p>
               </div>
             </div>}
-
 
             <div className="button-flex">
             {/* {
@@ -148,6 +202,17 @@ export default function App() {
                 <IoPlay className="icon"/>
               </button>
             }
+            {/* {
+              nowPlaying === undefined ?
+              null :
+              musicModal ? 
+              <button
+                  onClick={() => nextSong(nowPlaying)} 
+                  className="btn">
+                <IoPlaySkipForwardOutline className={`icon ${playlist.indexOf(nowPlaying) === playlist.length - 1 ? 'off' : 'on'}`}/>
+              </button> :
+              null
+            } */}
             {
               nowPlaying === undefined ?
               null :
@@ -170,7 +235,30 @@ export default function App() {
               null
             } */}
             </div>
-          
+            {
+                nowPlaying === undefined ?
+                null :
+                musicModal ?
+                <div className="progress-container">
+                <div className="music-progress-bar">
+                <div className="duration bar"/>
+                <div style={{width: loaded}} className="loaded bar"/>
+                <div style={{width: played}} className="played bar">
+                  <div
+                    draggable="true"
+                    className="seek-node"
+                    onDrag={(e) => handleSeek(e)}
+                    // onDragStart={}
+                    // onDragEnd={}
+                    />
+                </div>
+                </div>
+                <div className="timers">
+                  <p className="played-sec">{returnTime(playedSecs)}</p>
+                  <p className="duration-sec">{returnTime(duration)}</p>
+                </div>
+                </div> : null
+              }
           </div>
         </div>
       </div>
