@@ -13,7 +13,7 @@ import {
 
 
 
-export default function App() {
+function App() {
   const [playlist, setPlaylist] = useState(undefined);
   const [nowPlaying, setNowPlaying] = useState(undefined);
   const [musicModal, setMusicModal] = useState(false);
@@ -238,3 +238,5 @@ export default function App() {
       </div>
     )
   }
+
+  export default App;
