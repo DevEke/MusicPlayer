@@ -2,10 +2,14 @@ import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
 import './App.scss';
 import { songs } from './songs';
-import { useSpring, animated} from 'react-spring';
-import { useDrag } from 'react-use-gesture';
-import { IoPlay, IoMusicalNotes, IoPauseOutline, IoClose, IoPlaySkipForwardOutline, IoPlaySkipBackOutline } from 'react-icons/io5';
-import moment from 'moment';
+import { 
+  IoPlay, 
+  IoMusicalNotes, 
+  IoPauseOutline, 
+  IoClose, 
+  IoPlaySkipForwardOutline, 
+  IoPlaySkipBackOutline 
+} from 'react-icons/io5';
 
 
 
@@ -39,15 +43,6 @@ export default function App() {
     if (index < playlist.length - 1) {
       setNowPlaying(playlist[index + 1]);
     }
-  }
-
-  const fastForward = e => {
-    setSeeking(true);
-  }
-
-  const rewind = e => {
-    setSeeking(false);
-    this.player.seekTo(parseFloat(e.target.value));
   }
 
   const handleSeek = e => {
@@ -202,17 +197,6 @@ export default function App() {
                 <IoPlay className="icon"/>
               </button>
             }
-            {/* {
-              nowPlaying === undefined ?
-              null :
-              musicModal ? 
-              <button
-                  onClick={() => nextSong(nowPlaying)} 
-                  className="btn">
-                <IoPlaySkipForwardOutline className={`icon ${playlist.indexOf(nowPlaying) === playlist.length - 1 ? 'off' : 'on'}`}/>
-              </button> :
-              null
-            } */}
             {
               nowPlaying === undefined ?
               null :
