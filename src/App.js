@@ -33,7 +33,7 @@ function App() {
     let min = Math.floor((totalTime%3600)/60);
     let sec = totalTime - ( min * 60)
     if (min < 10) { min = "0"+ min}
-    if (sec < 10) { min = "0" + sec}
+    if (sec < 10) { sec = "0" + sec}
     return min + ":" + sec;
   }
 
@@ -150,6 +150,7 @@ function App() {
               <div className={musicModal ? 'centered ' : null}>
                 <p className="title">{nowPlaying?.title}</p>
                 <p>{nowPlaying?.artist} ft. {nowPlaying?.features.map(x=>`${x} `)}</p>
+                <p className="genre">{nowPlaying?.genre}</p>
               </div>
             </div>}
 

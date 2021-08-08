@@ -14,6 +14,7 @@ export const songs = [
         artist: "Wizkid",
         title: 'Essence',
         features: ["Tems"],
+        genre: 'Pop',
         album: 'Made In Lagos',
         artistImg: song1artist,
         songImg: song1album
@@ -23,6 +24,7 @@ export const songs = [
         artist: "Alex Isley",
         title: 'Good & Plenty Remix',
         features: ["Masego", "Lucky Daye"],
+        genre: 'R&B',
         album: 'Good & Plenty Remix',
         artistImg: song2artist,
         songImg: song2album
@@ -32,6 +34,7 @@ export const songs = [
         artist: "Benny Sings",
         title: 'Kids',
         features: ["KYLE"],
+        genre: 'Alternative',
         album: 'Music',
         artistImg: song3artist,
         songImg: song3album
