@@ -22,7 +22,6 @@ function App() {
   const [playedSecs, setPlayedSecs] = useState(0);
   const [loaded, setLoaded] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [seeking, setSeeking] = useState(false);
 
   const playSong = () => {
     setPlaying(true)
@@ -56,9 +55,6 @@ function App() {
     setLoaded(`${state.loaded * 100}%`);
     setPlayed(`${state.played * 100}%`);
     setPlayedSecs(state.playedSeconds);
-    if(!seeking) {
-      return state
-    }
   }
 
   const ref = player => {
@@ -150,7 +146,7 @@ function App() {
               <div className={musicModal ? 'centered ' : null}>
                 <p className="title">{nowPlaying?.title}</p>
                 <p>{nowPlaying?.artist} ft. {nowPlaying?.features.map(x=>`${x} `)}</p>
-                <p className="genre">{nowPlaying?.genre}</p>
+                {musicModal ? <p className="genre">{nowPlaying?.genre}</p> : null }
               </div>
             </div>}
 
