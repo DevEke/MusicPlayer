@@ -1,16 +1,19 @@
+$light: rgba(255,255,255,.05);
+
 .app-container {
   height: 100vh;
+  padding: 0;
   display: flex;
   flex-direction: column;
   position: relative;
-  justify-content: space-between;
+  background-image: linear-gradient(to bottom, rgb(10,10,10) 0%, rgb(0,0,0) 50%);
+  color: white;
 }
 
-.off {
-  opacity: .5;
-}
+
 
 * {
+  color: white;
   transition: all 0.15s ease-out;
   margin: 0;
   box-sizing: border-box;
@@ -21,24 +24,26 @@ html, body {
   margin: 0;
 }
 
-.active-song {
-  bottom: 0;
-  height: 100vh;
-  background-color: white;
+.playlist-head {
+  padding: 20px 0;
   display: flex;
-  padding: 50px 80px 20px 20px;
-
-  &:hover {
-    .tab-btn {
-      opacity: 1;
-    }
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid $light;
+  h1 {
+    padding: 0;
+  }
+  .icon {
+    font-size: 32px;
+    text-align: center;
+    color: $light;
   }
 }
 
 .tab-btn {
   position: absolute;
-  border-radius: 10px 10px 0 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 16px 0;
@@ -48,20 +53,20 @@ html, body {
   right: 0;
   cursor: pointer;
   border: none;
-  color: #939393;
+  color: white;
+  background-color: transparent;
   p {
     font-size: 14px;
     line-height: 14px;
-    margin-right: 16px;
+    margin-top: 8px;
     font-weight: 600;
-    opacity: .5;
+    opacity: .3;
   }
   .icon {
     font-size: 16px;
-    opacity: .5;
+    opacity: .3;
   }
   &:hover {
-    background-image: linear-gradient(to top, rgba(0,0,0,0), rgba(0,0,0,.05));
     p, .icon {
       opacity: 1;
     }
@@ -69,12 +74,48 @@ html, body {
 
 }
 
+.current-song-screen {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+
+.active-song {
+  bottom: 0;
+  height: 100vh;
+  background-image: linear-gradient(to top, rgba(10,10,10,1), rgba(0,0,0,1));
+  display: flex;
+  position: absolute;
+  padding: 20px 40px 20px 20px;
+
+  &:hover {
+    .tab-btn {
+      opacity: 1;
+    }
+  }
+}
+
+.closed {
+  height: auto;
+  position: relative;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 40px;
+  &:hover {
+    height: 190px;
+    background-color: $light;
+  }
+  
+}
+
+
+
 .open {
   height: 100vh;
   padding: 80px 0px 100px;
   position: absolute;
-  width: 100&;
-  background-color: #f0f0f0;
+  width: 100%;
+  background-image: linear-gradient(to bottom, rgb(10,10,10) 0%, rgb(0,0,0) 50%);
   flex-direction: column;
   align-items: center;
 }
@@ -101,7 +142,7 @@ html, body {
   padding-right: 40px;
   &:hover {
     height: 190px;
-    background-color: #f0f0f0;
+    background-color: $light;
   }
   
 }
@@ -113,10 +154,15 @@ html, body {
   .btn {
     border: none;
     background-color: transparent;
-    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    width: 48px;
+    border-radius: 50px;
     cursor: pointer;
     &:hover {
-      transform: scale(1.2,1.2);
+        background-color: $light;
     }
     .icon {
       font-size: 24px;
@@ -133,20 +179,7 @@ html, body {
 }
 
 
-.playlist-head {
-  padding: 20px 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  h1 {
-    padding: 0;
-  }
-  .icon {
-    font-size: 32px;
-    text-align: center;
-    color: #c4c4c4;
-  }
-}
+
 
 .custom-icon {
   display: flex;
@@ -175,7 +208,7 @@ html, body {
   align-items: center;
   justify-content: space-between;
   padding:  10px 20px 10px 10px;
-  border-radius: 5px;
+  border-radius: 1px;
   cursor: pointer;
   .img-info {
     display: flex;
@@ -191,15 +224,15 @@ html, body {
     font-size: 14px;
   }
   &:hover {
-    background-color: #f0f0f0;
+    background-image: linear-gradient(to right, $light, rgba(0,0,0,1));
     .icon {
       opacity: 1;
     }
   }
   .icon {
-    font-size: 24px;
+    font-size: 16px;
     opacity: 0;
-
+    margin-right: 16px;
   }
 }
 
@@ -219,6 +252,7 @@ html, body {
 .song-info {
   display: flex;
   align-items: center;
+  width: 100%;
 }
 
 .md {
@@ -235,13 +269,21 @@ html, body {
 
 .centered {
   text-align: center;
-  margin-bottom: 100px;
+  margin-bottom: 48px;
+}
+
+.off {
+  opacity: .15;
+  &:hover {
+    background-color: transparent;
+  }
+}
+
+.on {
+  opacity: 1;
 }
 
 @media only screen and (max-width: 1920px) {
-  .app-container {
-    padding: 0px 0px;
-  }
   .song-list-item {
     margin: 0 400px;
     h3 {
@@ -252,9 +294,7 @@ html, body {
     }
   }
   .playlist-head {
-    padding: 20px 400px;
-    border-bottom: 1px solid #f0f0f0;
-    margin-bottom: 8px;
+    padding: inherit 400px;
   }
   .active-song {
     margin: 0 400px;
@@ -274,9 +314,6 @@ html, body {
 }
 
 @media only screen and (max-width: 1640px) {
-  .app-container {
-    padding: 0px 0px;
-  }
   .song-list-item {
     margin: 0 250px;
     h3 {
@@ -286,24 +323,21 @@ html, body {
       font-size: 14px;
     }
   }
-  .playlist-head {
-    padding: 20px 250px;
-    border-bottom: 1px solid #f0f0f0;
-    margin-bottom: 8px;
-  }
   .active-song {
     margin: 0 250px;
-    padding: 40px 40px 20px 20px;
   }
-  .closed {
-    padding-right: 40px;
+  .open {
+    margin: 0;
   }
+  .playlist-head {
+    padding: inherit 250px;
+  }
+  
+
+
 }
 
 @media only screen and (max-width: 1440px) {
-  .app-container {
-    padding: 0px 0px;
-  }
   .song-list-item {
     margin: 0 165px;
     h3 {
@@ -314,13 +348,10 @@ html, body {
     }
   }
   .playlist-head {
-    padding: 20px 165px;
-    border-bottom: 1px solid #f0f0f0;
-    margin-bottom: 8px;
+    padding: inherit 165px;
   }
   .active-song {
     margin: 0 165px;
-    padding: 40px 40px 20px 20px;
   }
 
   .open {
@@ -328,9 +359,6 @@ html, body {
     margin: 0;
     border-radius: none;
     padding: 100px 0;
-  }
-  .closed {
-    padding-right: 40px;
   }
 
 
@@ -342,10 +370,6 @@ html, body {
 }
 
 @media only screen and (max-width: 1024px) {
-  .app-container {
-    padding: 0px 0px;
-  }
-
   .song-list-item {
     margin: 0 80px;
     h3 {
@@ -356,13 +380,10 @@ html, body {
     }
   }
   .playlist-head {
-    padding: 20px 80px;
-    border-bottom: 1px solid #f0f0f0;
-    margin-bottom: 8px;
+    padding: inherit 80px;
   }
   .active-song {
     margin: 0 80px;
-    padding: 20px 40px 20px 20px;
   }
 
   .open {
@@ -371,12 +392,6 @@ html, body {
     padding: 100px 0;
     border-radius: none;
   }
-
-  .closed {
-    padding-top: 60px;
-    padding-right: 40px;
-  }
-
   .title {
     font-size: 16px;
   }
@@ -393,9 +408,6 @@ html, body {
 }
 
 @media only screen and (max-width: 768px) {
-  .app-container {
-    padding: 0px 0px;
-  }
 
   .song-list-item {
     margin: 0 40px;
@@ -408,24 +420,18 @@ html, body {
     }
   }
   .playlist-head {
-    padding: 20px 40px;
-    border-bottom: 1px solid #f0f0f0;
-    margin-bottom: 8px;
+    padding: 10px 40px;
   }
 
   .active-song {
     margin: 0 40px;
-    padding: 20px 20px 20px 20px;
+    padding: 10px 40px;
   }
 
   .title {
     font-size: 16px;
   }
 
-  .closed {
-    margin: 0;
-    border-radius: 0;
-  }
 
   .open {
     padding: 80px 0;
@@ -448,34 +454,26 @@ html, body {
 }
 
 @media only screen and (max-width: 425px) {
-  .app-container {
-    padding: 0px 0px;
-  }
 
   .song-list-item {
     padding: 10px 10px;
     border-radius: none;
     margin: 0;
     h3 {
-      font-size: 14px;
+      font-size: 12px;
       margin-bottom: 4px;
     }
     p {
-      font-size: 12px;
+      font-size: 10px;
     }
   }
 
   .playlist-head {
-    
-    h1 {
-      font-size: 20px;
-      line-height: 20px;
-    }
+    padding: 10px 40px;
   }
 
   .active-song {
-    padding: 20px 20px 20px 20px;
-    background-color: #f0f0f0;
+    padding: 10px 20px;
   }
 
   .tab-btn {
@@ -498,7 +496,6 @@ html, body {
 
   .closed {
     height: auto;
-    padding-top: 50px;
     margin: 0;
     border-radius: 0;
     background-color: #f0f0f0;
@@ -508,13 +505,13 @@ html, body {
   }
   .open {
     width: 100vw;
-    padding: 100px 0 100px;
+    padding: 50px 0;
   }
   .song-info {
-    font-size: 12px;
+    font-size: 10px;
   }
   .title {
-    font-size: 14px;
+    font-size: 12px;
     margin-bottom: 4px;
   }
 
@@ -532,7 +529,7 @@ html, body {
 
   .button-flex {
     .btn {
-      margin: 0 8px;
+      margin: 0 12px;
     }
   }
 }
