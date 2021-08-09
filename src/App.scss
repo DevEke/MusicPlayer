@@ -272,12 +272,11 @@ html, body {
   height: 400px;
   width: 400px;
   border-radius: 10px;
-  margin-bottom: 24px;
 }
 
 .centered {
   text-align: center;
-  margin-bottom: 48px;
+  margin: 24px 0px;
 }
 
 .off {
@@ -321,6 +320,10 @@ html, body {
   }
 }
 
+.round {
+  border-radius: 500px;
+}
+
 .music-progress-bar {
   width: 100%;
   position: relative;
@@ -347,6 +350,29 @@ html, body {
   }
 
 }
+
+.image-container {
+  position: relative;
+  .icon {
+    position: absolute;
+    font-size: 24px;
+    opacity: 0;
+  }
+  .heart {
+    top: 10px;
+    right: 10px;
+  }
+  .options {
+    bottom: 10px;
+    right: 10px;
+  }
+  .priority {
+    z-index: 999;
+    opacity: 1;
+  }
+}
+
+
 
 @media only screen and (max-width: 1920px) {
   .song-list-item {
@@ -589,7 +615,6 @@ html, body {
     height: 300px;
     width: 300px;
     margin: 0;
-    margin-bottom: 24px;
   }
 
   .button-flex {

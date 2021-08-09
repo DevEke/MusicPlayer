@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
 import './App.scss';
-import { songs } from './songs';
+import { songs } from '../../../DevEkeProjects/mezzo-app/mezzo-app/songs';
 import { 
   IoPlay, 
   IoMusicalNotes, 
   IoPauseOutline, 
   IoClose, 
   IoPlaySkipForwardOutline, 
-  IoPlaySkipBackOutline 
+  IoPlaySkipBackOutline, 
+  IoHeartOutline,
+  IoEllipsisVertical
 } from 'react-icons/io5';
 
 
@@ -22,6 +24,7 @@ function App() {
   const [playedSecs, setPlayedSecs] = useState(0);
   const [loaded, setLoaded] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [options, setOptions] = useState(false);
 
   const playSong = () => {
     setPlaying(true)
@@ -40,6 +43,30 @@ function App() {
     let index = playlist.indexOf(song);
     if (index < playlist.length - 1) {
       setNowPlaying(playlist[index + 1]);
+    }
+  }
+
+  const prevSwitcher = (song) => {
+    if (playedSecs <= 10) {
+      nextSong(song)
+    } else {
+      setPlayed(0);
+    }
+  }
+
+  const skip30Forward = () => {
+    if (played === duration || !playing ) {
+      return
+    } else {
+      setPlayedSecs(playedSecs => playedSecs + 30);
+    }
+  }
+
+  const skip30Back = () => {
+    if (played === duration || !playing ) {
+      return
+    } else {
+      setPlayedSecs(playedSecs => playedSecs - 30);
     }
   }
 
@@ -66,6 +93,10 @@ function App() {
     if (index > 0) {
       setNowPlaying(playlist[index - 1]);
     }
+  }
+
+  const toggleOptions = () => {
+    setOptions(!options);
   }
 
 
@@ -140,9 +171,22 @@ function App() {
             { nowPlaying === undefined ?
             null : 
             <div
+            
             onClick={musicModal ? null : () => setMusicModal(true)} 
             className={`song-info ${musicModal ? 'column': 'row'}`}>
-              <img alt="album" className={`song-img md ${musicModal ? 'lrg' : 'sml'}`} src={nowPlaying?.songImg}/>
+              <div className="image-container">
+              <img 
+                alt="album"
+                onClick={musicModal ? () => toggleOptions(true) : null} 
+                className={`song-img md ${musicModal ? 'lrg' : 'sml'} ${options ? 'round' : ''}`} 
+                src={options ? nowPlaying?.artistImg : nowPlaying?.songImg}/>
+                {musicModal ?
+                  <IoHeartOutline className={`icon heart ${options ? 'priority' : ''}`}/> : 
+                  null }
+                {musicModal ? 
+                <IoEllipsisVertical className={`icon options ${options ? 'priority' : ''}`}/> : 
+                null}
+              </div>
               <div className={musicModal ? 'centered ' : null}>
                 <p className="title">{nowPlaying?.title}</p>
                 <p>{nowPlaying?.artist} ft. {nowPlaying?.features.map(x=>`${x} `)}</p>

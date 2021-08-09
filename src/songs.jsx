@@ -2,7 +2,7 @@ import song1 from './assets/song1.mp3';
 import song1artist from './assets/song1artist.jpg';
 import song1album from './assets/song1album.jpg';
 import song2 from './assets/song2.mp3';
-import song2artist from './assets/song2artist.jpg';
+import song2artist from './assetssong2artist.jpg';
 import song2album from './assets/song2album.jpg';
 import song3 from './assets/song3.mp3'
 import song3artist from './assets/song3artist.jpg';
